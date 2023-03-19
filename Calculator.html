@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		#calculator {
+			width: 300px;
+			margin: 50px auto;
+			padding: 20px;
+			background-color: #f2f2f2;
+			border-radius: 5px;
+			box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+		}
+		input[type="button"] {
+			width: 50px;
+			height: 50px;
+			background-color: #4CAF50;
+			border: none;
+			color: #fff;
+			font-size: 20px;
+			margin: 5px;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		input[type="text"] {
+			width: 90%;
+			padding: 10px;
+			font-size: 20px;
+			margin: 10px;
+			border: none;
+			border-radius: 5px;
+			box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+			text-align: right;
+		}
+    </style>
+</head>
+<body>
+    <div id="calculator">
+		<input type="text" id="result" value="0">
+        
+		<input type="button" value="7" onclick="addDigit(7)">
+		<input type="button" value="8" onclick="addDigit(8)">
+		<input type="button" value="9" onclick="addDigit(9)">
+		<input type="button" value="+" onclick="addOperator('+')">
+		<br>
+		<input type="button" value="4" onclick="addDigit(4)">
+		<input type="button" value="5" onclick="addDigit(5)">
+		<input type="button" value="6" onclick="addDigit(6)">
+		<input type="button" value="-" onclick="addOperator('-')">
+		<br>
+		<input type="button" value="1" onclick="addDigit(1)">
+		<input type="button" value="2" onclick="addDigit(2)">
+		<input type="button" value="3" onclick="addDigit(3)">
+		<input type="button" value="*" onclick="addOperator('*')">
+		<br>
+		<input type="button" value="0" onclick="addDigit(0)">
+		<input type="button" value="." onclick="addDecimal()">
+		<input type="button" value="/" onclick="addOperator('/')">
+		<input type="button" value="C" onclick="clearResult()">
+		<br>
+		<input type="button" value="=" onclick="calculate()">
+	</div>
+	<script>
+		let result = document.getElementById("result");
+let currentNumber = "";
+let currentOperator = "";
+let firstNumber = "";
+
+function addDigit(digit) {
+    if (result.value == "0") {
+        result.value = digit;
+    } else {
+        result.value += digit;
+    }
+    currentNumber += digit;
+}
+
+function addDecimal() {
+    if (!result.value.includes(".")) {
+        result.value += ".";
+        currentNumber += ".";
+    }
+}
+
+function addOperator(operator) {
+    if (currentOperator != "") {
+        calculate();
+    }
+    firstNumber = result.value;
+    currentNumber = "";
+    currentOperator = operator;
+	result.value = firstNumber + " " + currentOperator + " ";
+}
+
+function clearResult() {
+    result.value = "0";
+    currentNumber = "";
+    currentOperator = "";
+    firstNumber = "";
+}
+
+function calculate() {
+    if (currentOperator == "+") {
+        result.value = parseFloat(firstNumber) + parseFloat(currentNumber);
+    } else if (currentOperator == "-") {
+        result.value = parseFloat(firstNumber) - parseFloat(currentNumber);
+    } else if (currentOperator == "*") {
+        result.value = parseFloat(firstNumber) * parseFloat(currentNumber);
+    } else if (currentOperator == "/") {
+        result.value = parseFloat(firstNumber) / parseFloat(currentNumber);
+    }
+    currentNumber = result.value.toString();
+}
+	</script>
+</body>
+</html>
